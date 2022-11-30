@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using music_info_app.DAL;
 using music_info_app.DB;
+using music_info_app.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<SongContext>(options => options.UseSqlServer("server=(localdb)\\MSSQLLocalDB;database=SongDb;trusted_connection=true;"));
+builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 
 var app = builder.Build();
 
@@ -20,6 +23,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "areas",
+      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
+});
 
 app.UseHttpsRedirection();
 

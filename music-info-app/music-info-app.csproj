@@ -14,7 +14,15 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Song\Controllers\" />
+    <Folder Include="Areas\Song\Data\" />
+    <Folder Include="Areas\Song\Models\" />
+    <Folder Include="Areas\Song\Views\" />
   </ItemGroup>
 
 </Project>
