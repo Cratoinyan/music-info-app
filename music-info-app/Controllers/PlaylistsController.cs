@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using music_info_app.DAL;
 using music_info_app.DB;
 using music_info_app.Model;
 
@@ -14,32 +15,32 @@ namespace music_info_app.Controllers
     [ApiController]
     public class PlaylistsController : ControllerBase
     {
-        private readonly SongContext _context;
+        private readonly IGenericRepository<Playlist> _repository;
 
-        public PlaylistsController(SongContext context)
+        public PlaylistsController(IGenericRepository<Playlist> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Playlists
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Playlist>>> GetPlaylists()
+        public IQueryable<Playlist> GetPlaylists()
         {
-            return await _context.Playlists.ToListAsync();
+            return _repository.GetAll();
         }
 
         // GET: api/Playlists/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Playlist>> GetPlaylist(int id)
         {
-            var playlist = await _context.Playlists.FindAsync(id);
+            var playList = await _repository.GetByID(id);
 
-            if (playlist == null)
+            if (playList == null)
             {
                 return NotFound();
             }
 
-            return playlist;
+            return playList;
         }
 
         // PUT: api/Playlists/5
@@ -52,57 +53,23 @@ namespace music_info_app.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(playlist).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlaylistExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return (IActionResult)await _repository.Update(id, playlist);
         }
 
         // POST: api/Playlists
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Playlist>> PostPlaylist(Playlist playlist)
+        public async Task<IActionResult> PostPlaylist(Playlist playlist)
         {
-            _context.Playlists.Add(playlist);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPlaylist", new { id = playlist.Id }, playlist);
+            return (IActionResult)_repository.Create(playlist);
         }
 
         // DELETE: api/Playlists/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlaylist(int id)
+        public async Task<Playlist> DeletePlaylist(int id)
         {
-            var playlist = await _context.Playlists.FindAsync(id);
-            if (playlist == null)
-            {
-                return NotFound();
-            }
-
-            _context.Playlists.Remove(playlist);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool PlaylistExists(int id)
-        {
-            return _context.Playlists.Any(e => e.Id == id);
+            return await _repository.Delete(id);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using music_info_app.DAL;
 using music_info_app.DB;
 using music_info_app.Model;
 
@@ -14,25 +15,25 @@ namespace music_info_app.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly SongContext _context;
+        private readonly IGenericRepository<User> _repository;
 
-        public UsersController(SongContext context)
+        public UsersController(IGenericRepository<User> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public IQueryable<User> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return _repository.GetAll();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _repository.GetByID(id);
 
             if (user == null)
             {
@@ -52,57 +53,23 @@ namespace music_info_app.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return (IActionResult)await _repository.Update(id, user);
         }
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult> PostUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return (IActionResult)_repository.Create(song);
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<User> DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
+            return await _repository.Delete(id);
         }
     }
 }

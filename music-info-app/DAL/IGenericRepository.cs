@@ -7,7 +7,7 @@ namespace music_info_app.DAL
         IQueryable<TModel> GetAll();
         Task<TModel> GetByID(int id);
         Task Create(TModel model);
-        Task Update(int id, TModel model);
-        Task Delete(int id);
+        Task<TModel> Update(int id, TModel model);
+        Task<TModel> Delete(int id);
     }
 }

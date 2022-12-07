@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using music_info_app.DAL;
 using music_info_app.DB;
 using music_info_app.Model;
 
@@ -15,24 +16,25 @@ namespace music_info_app.Controllers
     public class AlbumsController : ControllerBase
     {
         private readonly SongContext _context;
+        private readonly IGenericRepository<Album> _repository;
 
-        public AlbumsController(SongContext context)
+        public AlbumsController(IGenericRepository<Album> repository)
         {
-            _context = context;
+            _repository= repository;
         }
 
         // GET: api/Albums
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Album>>> GetAlbums()
+        public IQueryable<Album> GetAlbums()
         {
-            return await _context.Albums.ToListAsync();
+            return _repository.GetAll();
         }
 
         // GET: api/Albums/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Album>> GetAlbum(int id)
         {
-            var album = await _context.Albums.FindAsync(id);
+            var album = await _repository.GetByID(id);
 
             if (album == null)
             {
@@ -52,36 +54,16 @@ namespace music_info_app.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(album).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AlbumExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return (IActionResult)await _repository.Update(id, album);
         }
 
         // POST: api/Albums
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Album>> PostAlbum(Album album)
+        public async Task<IActionResult> PostAlbum(Album album)
         {
-            _context.Albums.Add(album);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAlbum", new { id = album.Id }, album);
+            return (IActionResult)_repository.Create(album);
         }
 
         // DELETE: api/Albums/5
@@ -100,9 +82,9 @@ namespace music_info_app.Controllers
             return NoContent();
         }
 
-        private bool AlbumExists(int id)
+        private async Task<Album> AlbumExists(int id)
         {
-            return _context.Albums.Any(e => e.Id == id);
+            return await _repository.Delete(id);
         }
     }
 }

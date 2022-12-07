@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using music_info_app.DAL;
 using music_info_app.DB;
 using music_info_app.Model;
 
@@ -14,25 +15,25 @@ namespace music_info_app.Controllers
     [ApiController]
     public class BugLogsController : ControllerBase
     {
-        private readonly SongContext _context;
+        private readonly IGenericRepository<BugLog> _repository;
 
-        public BugLogsController(SongContext context)
+        public BugLogsController(IGenericRepository<BugLog> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        // GET: api/BugLogs
+        // GET: api/Albums
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BugLog>>> GetBugLog()
+        public IQueryable<BugLog> GetBugLogs()
         {
-            return await _context.BugLog.ToListAsync();
+            return _repository.GetAll();
         }
 
-        // GET: api/BugLogs/5
+        // GET: api/Albums/5
         [HttpGet("{id}")]
         public async Task<ActionResult<BugLog>> GetBugLog(int id)
         {
-            var bugLog = await _context.BugLog.FindAsync(id);
+            var bugLog = await _repository.GetByID(id);
 
             if (bugLog == null)
             {
@@ -42,7 +43,7 @@ namespace music_info_app.Controllers
             return bugLog;
         }
 
-        // PUT: api/BugLogs/5
+        // PUT: api/Albums/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBugLog(int id, BugLog bugLog)
@@ -52,57 +53,23 @@ namespace music_info_app.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(bugLog).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BugLogExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return (IActionResult)await _repository.Update(id, bugLog);
         }
 
-        // POST: api/BugLogs
+        // POST: api/Albums
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BugLog>> PostBugLog(BugLog bugLog)
+        public async Task<IActionResult> PostBugLog(BugLog bugLog)
         {
-            _context.BugLog.Add(bugLog);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBugLog", new { id = bugLog.Id }, bugLog);
+            return (IActionResult)_repository.Create(bugLog);
         }
 
-        // DELETE: api/BugLogs/5
+        // DELETE: api/Albums/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBugLog(int id)
+        public async Task<Album> DeleteAlbum(int id)
         {
-            var bugLog = await _context.BugLog.FindAsync(id);
-            if (bugLog == null)
-            {
-                return NotFound();
-            }
-
-            _context.BugLog.Remove(bugLog);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool BugLogExists(int id)
-        {
-            return _context.BugLog.Any(e => e.Id == id);
+            return await _repository.Delete(id);
         }
     }
 }

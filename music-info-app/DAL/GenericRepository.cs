@@ -25,16 +25,18 @@ namespace music_info_app.DAL
             await songContext.Set<TModel>().AddAsync(model);
             await songContext.SaveChangesAsync();
         }
-        public async Task Update(int id, TModel model)
+        public async Task<TModel> Update(int id, TModel model)
         {
             songContext.Set<TModel>().Update(model);
             await songContext.SaveChangesAsync();
+            return model;
         }
-        public async Task Delete(int id)
+        public async Task<TModel> Delete(int id)
         {
             var model = await GetByID(id);
             songContext.Set<TModel>().Remove(model);
             await songContext.SaveChangesAsync();
+            return model;
         }
     }
 }

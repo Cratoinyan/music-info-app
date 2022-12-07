@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using music_info_app.DAL;
 using music_info_app.DB;
 using music_info_app.Model;
 
@@ -15,24 +16,25 @@ namespace music_info_app.Controllers
     public class ArtistsController : ControllerBase
     {
         private readonly SongContext _context;
+        private readonly IGenericRepository<Artist> _repository;
 
-        public ArtistsController(SongContext context)
+        public ArtistsController(IGenericRepository<Artist> repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         // GET: api/Artists
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Artist>>> GetArtists()
+        public  IQueryable<Artist> GetArtists()
         {
-            return await _context.Artists.ToListAsync();
+            return _repository.GetAll();
         }
 
         // GET: api/Artists/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Artist>> GetArtist(int id)
         {
-            var artist = await _context.Artists.FindAsync(id);
+            var artist = await _repository.GetByID(id);
 
             if (artist == null)
             {
@@ -52,57 +54,24 @@ namespace music_info_app.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(artist).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ArtistExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            return (IActionResult)await _repository.Update(id, artist);
 
-            return NoContent();
         }
 
         // POST: api/Artists
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Artist>> PostArtist(Artist artist)
+        public async Task<IActionResult> PostArtist(Artist artist)
         {
-            _context.Artists.Add(artist);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetArtist", new { id = artist.Id }, artist);
+            return (IActionResult)_repository.Create(artist);
         }
 
         // DELETE: api/Artists/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteArtist(int id)
+        public async Task<Artist> DeleteArtist(int id)
         {
-            var artist = await _context.Artists.FindAsync(id);
-            if (artist == null)
-            {
-                return NotFound();
-            }
-
-            _context.Artists.Remove(artist);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ArtistExists(int id)
-        {
-            return _context.Artists.Any(e => e.Id == id);
+            return await  _repository.Delete(id);
         }
     }
 }
