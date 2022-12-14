@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using music_info_app.DAL.Interface;
 using music_info_app.DB;
 using music_info_app.Model;
 
-namespace music_info_app.DAL
+namespace music_info_app.DAL.Concreation
 {
-    public class GenericRepository<TModel> : IGenericRepository<TModel> where TModel: BaseModel
+    public class GenericRepository<TModel> : IGenericRepository<TModel> where TModel : BaseModel
     {
-        private SongContext songContext;
+        protected SongContext songContext;
 
         public GenericRepository(SongContext songContext)
         {
@@ -14,11 +15,11 @@ namespace music_info_app.DAL
         }
         public IQueryable<TModel> GetAll()
         {
-            return songContext.Set<TModel>().AsNoTracking<TModel>();
+            return songContext.Set<TModel>().AsNoTracking();
         }
         public async Task<TModel> GetByID(int id)
         {
-            return await songContext.Set<TModel>().AsNoTracking<TModel>().FirstAsync<TModel>(e => e.Id == id);
+            return await songContext.Set<TModel>().AsNoTracking().FirstAsync(e => e.Id == id);
         }
         public async Task Create(TModel model)
         {

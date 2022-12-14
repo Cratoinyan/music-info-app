@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using music_info_app.DAL;
+using music_info_app.DAL.Interface;
 using music_info_app.DB;
 using music_info_app.Model;
 
@@ -15,7 +15,6 @@ namespace music_info_app.Controllers
     [ApiController]
     public class AlbumsController : ControllerBase
     {
-        private readonly SongContext _context;
         private readonly IGenericRepository<Album> _repository;
 
         public AlbumsController(IGenericRepository<Album> repository)
@@ -68,21 +67,7 @@ namespace music_info_app.Controllers
 
         // DELETE: api/Albums/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAlbum(int id)
-        {
-            var album = await _context.Albums.FindAsync(id);
-            if (album == null)
-            {
-                return NotFound();
-            }
-
-            _context.Albums.Remove(album);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private async Task<Album> AlbumExists(int id)
+        public async Task<Album> DeleteAlbum(int id)
         {
             return await _repository.Delete(id);
         }

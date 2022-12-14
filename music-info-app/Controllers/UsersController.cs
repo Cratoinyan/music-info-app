@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using music_info_app.DAL;
+using music_info_app.DAL.Interface;
 using music_info_app.DB;
 using music_info_app.Model;
 
@@ -60,9 +60,9 @@ namespace music_info_app.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult> PostUser(User user)
+        public async Task<IActionResult> PostUser(User user)
         {
-            return (IActionResult)_repository.Create(song);
+            return (IActionResult)_repository.Create(user);
         }
 
         // DELETE: api/Users/5

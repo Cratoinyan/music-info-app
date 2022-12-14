@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using music_info_app.DB;
 
@@ -11,9 +12,11 @@ using music_info_app.DB;
 namespace musicinfoapp.Migrations
 {
     [DbContext(typeof(SongContext))]
-    partial class SongContextModelSnapshot : ModelSnapshot
+    [Migration("20221209164835_removeNeedlessTables")]
+    partial class removeNeedlessTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,6 +133,9 @@ namespace musicinfoapp.Migrations
                     b.Property<int?>("PlaylistId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SingerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -139,6 +145,8 @@ namespace musicinfoapp.Migrations
                     b.HasIndex("AlbumId");
 
                     b.HasIndex("PlaylistId");
+
+                    b.HasIndex("SingerId");
 
                     b.ToTable("Songs");
                 });
@@ -190,6 +198,14 @@ namespace musicinfoapp.Migrations
                     b.HasOne("music_info_app.Model.Playlist", null)
                         .WithMany("Songs")
                         .HasForeignKey("PlaylistId");
+
+                    b.HasOne("music_info_app.Model.Artist", "Singer")
+                        .WithMany()
+                        .HasForeignKey("SingerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Singer");
                 });
 
             modelBuilder.Entity("music_info_app.Model.Album", b =>

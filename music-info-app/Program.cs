@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using music_info_app.DAL;
+using music_info_app.DAL.Concreation;
+using music_info_app.DAL.Interface;
 using music_info_app.DB;
 using music_info_app.Model;
 

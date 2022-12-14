@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using music_info_app.DAL;
+using music_info_app.DAL.Interface;
 using music_info_app.DB;
 using music_info_app.Model;
 
@@ -15,7 +15,6 @@ namespace music_info_app.Controllers
     [ApiController]
     public class ArtistsController : ControllerBase
     {
-        private readonly SongContext _context;
         private readonly IGenericRepository<Artist> _repository;
 
         public ArtistsController(IGenericRepository<Artist> repository)
