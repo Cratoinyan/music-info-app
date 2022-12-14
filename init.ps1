@@ -1,5 +1,8 @@
-$dotnet ef database update
-$dotnet run
+cd music-info-app
+dotnet ef database update
+Start-Job -ScriptBlock {dotnet run}
+
+Start-Sleep -Seconds 5
 
 
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
@@ -34,6 +37,7 @@ $response = Invoke-RestMethod 'https://localhost:7166/api/Artists' -Method 'POST
 $response | ConvertTo-Json
 
 
+
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Content-Type", "application/json")
 
@@ -66,7 +70,6 @@ $response = Invoke-RestMethod 'https://localhost:7166/api/Artists' -Method 'POST
 $response | ConvertTo-Json
 
 
-
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
 $headers.Add("Content-Type", "application/json")
 
@@ -97,3 +100,5 @@ $body = "{
 
 $response = Invoke-RestMethod 'https://localhost:7166/api/Artists' -Method 'POST' -Headers $headers -Body $body
 $response | ConvertTo-Json
+
+Read-Host -Prompt "Press any key to continue"
