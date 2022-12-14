@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using music_info_app.DAL.Interface;
 using music_info_app.DB;
-using music_info_app.Model;
+using music_info_app.Entities;
 
 namespace music_info_app.DAL.Concreation
 {
-    public class GenericRepository<TModel> : IGenericRepository<TModel> where TModel : BaseModel
+    public class GenericRepository<TModel> : IGenericRepository<TModel> where TModel : BaseEntity
     {
         protected SongContext songContext;
 
@@ -21,10 +21,11 @@ namespace music_info_app.DAL.Concreation
         {
             return await songContext.Set<TModel>().AsNoTracking().FirstAsync(e => e.Id == id);
         }
-        public async Task Create(TModel model)
+        public async Task<TModel> Create(TModel model)
         {
             await songContext.Set<TModel>().AddAsync(model);
             await songContext.SaveChangesAsync();
+            return model;
         }
         public async Task<TModel> Update(int id, TModel model)
         {

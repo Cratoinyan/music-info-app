@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using music_info_app.DAL.Interface;
 using music_info_app.DB;
-using music_info_app.Model;
+using music_info_app.Entities;
 
 namespace music_info_app.Controllers
 {
@@ -15,9 +15,9 @@ namespace music_info_app.Controllers
     [ApiController]
     public class ArtistsController : ControllerBase
     {
-        private readonly IGenericRepository<Artist> _repository;
+        private readonly IArtistRepository _repository;
 
-        public ArtistsController(IGenericRepository<Artist> repository)
+        public ArtistsController(IArtistRepository repository)
         {
             _repository = repository;
         }
@@ -61,9 +61,9 @@ namespace music_info_app.Controllers
         // POST: api/Artists
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<IActionResult> PostArtist(Artist artist)
+        public async Task<Artist> PostArtist(Artist artist)
         {
-            return (IActionResult)_repository.Create(artist);
+            return await _repository.Create(artist);
         }
 
         // DELETE: api/Artists/5

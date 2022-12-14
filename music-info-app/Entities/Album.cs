@@ -1,6 +1,6 @@
-﻿namespace music_info_app.Model
+﻿namespace music_info_app.Entities
 {
-    public class Album : BaseModel
+    public class Album : BaseEntity
     {
         public string Name { get; set; }
         public List<Song> Songs { get; set; }

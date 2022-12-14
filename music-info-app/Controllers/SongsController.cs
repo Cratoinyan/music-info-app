@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using music_info_app.DAL.Interface;
 using music_info_app.DB;
-using music_info_app.Model;
+using music_info_app.Entities;
 
 namespace music_info_app.Controllers
 {
@@ -60,9 +60,9 @@ namespace music_info_app.Controllers
         // POST: api/Songs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<IActionResult> PostSong(Song song)
+        public async Task<Song> PostSong(Song song)
         {
-            return (IActionResult)_repository.Create(song);
+            return await _repository.Create(song);
         }
 
         // DELETE: api/Songs/5

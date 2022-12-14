@@ -1,4 +1,4 @@
-﻿using music_info_app.Model;
+﻿using music_info_app.Entities;
 
 namespace music_info_app.DAL.Interface
 {

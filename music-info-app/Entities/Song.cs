@@ -1,6 +1,6 @@
-﻿namespace music_info_app.Model
+﻿namespace music_info_app.Entities
 {
-    public class Song: BaseModel
+    public class Song: BaseEntity
     {
         public string Title { get; set; }
         public string Lyrics { get; set; }
