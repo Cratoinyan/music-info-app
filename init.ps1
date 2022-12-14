@@ -1,8 +1,10 @@
 cd music-info-app
+dotnet tool install --global dotnet-ef
+dotnet build
 dotnet ef database update
 Start-Job -ScriptBlock {dotnet run}
 
-Start-Sleep -Seconds 5
+Start-Sleep -Seconds 3
 
 
 $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
