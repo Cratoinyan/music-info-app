@@ -1,0 +1,26 @@
+﻿@using music_info_app.Entities;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Artist;
+
+<div>
+    <h1>@Model.Name</h1>
+    @foreach(var album in Model.Albums)
+    {
+        <h2>@album.Name</h2>
+        <hr />
+        @foreach(var song in album.Songs)
+        {
+            <div>
+                <p>@song.Title @song.ListenerCount listeners</p>
+                <p>Lyrics</p>
+                <p>@song.Lyrics</p>
+            </div>
+            <hr />
+        }
+        <hr />
+    }
+</div>
