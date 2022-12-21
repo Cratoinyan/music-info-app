@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Nothing More\",\r\n  \"about\": \"Rock Band\",\r\n  \"albums\": [\r\n    {\r\n      \"name\": \"The Stories We Tell Ourselves\",\r\n      \"songs\": [\r\n        {\r\n          \"title\": \"Go To War\",\r\n          \"lyrics\": \"I don't know what you had in mind But here we stand on opposing sidesLet's go to war Let's go to war We arm ourselves with the wrongs we've done Name them off one by one Let's go to war Let's go to war\",\r\n          \"duration\": 245,\r\n          \"listenerCount\": 61627389\r\n        }\r\n      ],\r\n      \"songCount\": 2\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"name\": \"Nothing More\",\r\n  \"about\": \"Rock Band\",\r\n  \"albums\": [\r\n    {\r\n      \"name\": \"The Stories We Tell Ourselves\",\r\n      \"songs\": [\r\n        {\r\n          \"title\": \"Go To War\",\r\n          \"lyrics\": \"I don't know what you had in mind But here we stand on opposing sidesLet's go to war Let's go to war We arm ourselves with the wrongs we've done Name them off one by one Let's go to war Let's go to war\",\r\n          \"duration\": 245,\r\n          \"listenerCount\": 61627389\r\n        },\r\n        {\r\n          \"title\": \"Fade In / Fade Out\",\r\n          \"lyrics\": \"Just the other day I looked at my father It was the first time I saw he'd grown old Canyons through his skin and the rivers that made them Carved the stories I was told\",\r\n          \"duration\": 365,\r\n          \"listenerCount\": 25027042\r\n        }\r\n      ],\r\n      \"songCount\": 2\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -41,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Cem Karaca\",\r\n  \"about\": \"Anadolu Rock'ın kralı\",\r\n  \"albums\": [\r\n    {\r\n      \"name\": \"Yiyin Efendiler\",\r\n      \"songs\": [\r\n        {\r\n          \"title\": \"Yiyin Efendiler\",\r\n          \"lyrics\": \"Bu sofracık efendiler Halkımızın varı yoğu hayatı Kan ağlayan can çekişen halkımızın Bekler sizi efendiler Önünüzde titrer durur Ama sakın çekinmeyin Yiyin yutun, yiyin yutun, iyin yutun şapur şupur\",\r\n          \"duration\": 271,\r\n          \"listenerCount\": 1124572\r\n        },\r\n        {\r\n          \"title\": \"Kirlenmiş Çığlık\",\r\n          \"lyrics\": \"Yalanan yutulan her lokmada Gizlenmiş bir kirlenmiş çığlık Hiroşima'daki bulutlar değil ama ustam Dondurmalar bile zehirli artık Çiçekler çiçek gibi kokmuyor artık Ve doğa nasıl yırtık Bu günah dolu miras ey Allahım Çocuklarımıza nasıl bıraktık\",\r\n          \"duration\": 445,\r\n          \"listenerCount\": 287435\r\n        }\r\n      ],\r\n      \"songCount\": 2\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"name\": \"Cem Karaca\",\r\n  \"about\": \"Anadolu Rock'ın kralı\",\r\n  \"albums\": [\r\n    {\r\n      \"name\": \"Yiyin Efendiler\",\r\n      \"songs\": [\r\n        {\r\n          \"title\": \"Yiyin Efendiler\",\r\n          \"lyrics\": \"Bu sofracık efendiler Halkımızın varı yoğu hayatı Kan ağlayan can çekişen halkımızın Bekler sizi efendiler Önünüzde titrer durur Ama sakın çekinmeyin Yiyin yutun, yiyin yutun, iyin yutun şapur şupur\",\r\n          \"duration\": 271,\r\n          \"listenerCount\": 1124572\r\n        },\r\n        {\r\n          \"title\": \"Kirlenmiş Çığlık\",\r\n          \"lyrics\": \"Yalanan yutulan her lokmada Gizlenmiş bir kirlenmiş çığlık Hiroşima'daki bulutlar değil ama ustam Dondurmalar bile zehirli artık Çiçekler çiçek gibi kokmuyor artık Ve doğa nasıl yırtık Bu günah dolu miras ey Allahım Çocuklarımıza nasıl bıraktık\",\r\n          \"duration\": 445,\r\n          \"listenerCount\": 287435\r\n        }\r\n      ],\r\n      \"songCount\": 2\r\n    },\r\n    {\r\n                \"name\": \"Ölümsüzler\",\r\n                \"songs\": [\r\n                    {\r\n                        \"title\": \"Namus Belası\",\r\n                        \"lyrics\": \"Bu sofracık efendiler Halkımızın varı yoğu hayatı Kan ağlayan can çekişen halkımızın Bekler sizi efendiler Önünüzde titrer durur Ama sakın çekinmeyin Yiyin yutun, yiyin yutun, iyin yutun şapur şupur\",\r\n                        \"duration\": 263,\r\n                        \"listenerCount\": 10762912\r\n                    }\r\n                ],\r\n                \"songCount\": 1\r\n            }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -96,7 +96,19 @@
 			"name": "New Request",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7166/api/Artists",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7166",
+					"path": [
+						"api",
+						"Artists"
+					]
+				}
 			},
 			"response": []
 		}
