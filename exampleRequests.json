@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "f3340231-8484-4fff-9335-8015c9ebe305",
+		"name": "music-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "addArtist1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Nothing More\",\r\n  \"about\": \"Rock Band\",\r\n  \"albums\": [\r\n    {\r\n      \"name\": \"The Stories We Tell Ourselves\",\r\n      \"songs\": [\r\n        {\r\n          \"title\": \"Go To War\",\r\n          \"lyrics\": \"I don't know what you had in mind But here we stand on opposing sidesLet's go to war Let's go to war We arm ourselves with the wrongs we've done Name them off one by one Let's go to war Let's go to war\",\r\n          \"duration\": 245,\r\n          \"listenerCount\": 61627389\r\n        }\r\n      ],\r\n      \"songCount\": 2\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7166/api/Artists",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7166",
+					"path": [
+						"api",
+						"Artists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addArtist2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Cem Karaca\",\r\n  \"about\": \"Anadolu Rock'ın kralı\",\r\n  \"albums\": [\r\n    {\r\n      \"name\": \"Yiyin Efendiler\",\r\n      \"songs\": [\r\n        {\r\n          \"title\": \"Yiyin Efendiler\",\r\n          \"lyrics\": \"Bu sofracık efendiler Halkımızın varı yoğu hayatı Kan ağlayan can çekişen halkımızın Bekler sizi efendiler Önünüzde titrer durur Ama sakın çekinmeyin Yiyin yutun, yiyin yutun, iyin yutun şapur şupur\",\r\n          \"duration\": 271,\r\n          \"listenerCount\": 1124572\r\n        },\r\n        {\r\n          \"title\": \"Kirlenmiş Çığlık\",\r\n          \"lyrics\": \"Yalanan yutulan her lokmada Gizlenmiş bir kirlenmiş çığlık Hiroşima'daki bulutlar değil ama ustam Dondurmalar bile zehirli artık Çiçekler çiçek gibi kokmuyor artık Ve doğa nasıl yırtık Bu günah dolu miras ey Allahım Çocuklarımıza nasıl bıraktık\",\r\n          \"duration\": 445,\r\n          \"listenerCount\": 287435\r\n        }\r\n      ],\r\n      \"songCount\": 2\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7166/api/Artists",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7166",
+					"path": [
+						"api",
+						"Artists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addArtist3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"maNga\",\r\n  \"about\": \"Türk Rock Grubu\",\r\n  \"albums\": [\r\n    {\r\n      \"name\": \"Şehr-i Hüzün\",\r\n      \"songs\": [\r\n        {\r\n          \"title\": \"Cevapsız Sorular\",\r\n          \"lyrics\": \"Birden ay ışığını kesti Birde sen çok değiştin Yaşananlar hiç yaşanmamış gibi Söylenenler hiç söylenmemiş gibi\",\r\n          \"duration\": 272,\r\n          \"listenerCount\": 69296980\r\n        },\r\n        {\r\n          \"title\": \"Beni Benimle Bırak\",\r\n          \"lyrics\": \"Al bu dünya, al senin olsun Benim hiç gözüm yok, hepsi senin olsun Ama son bir dileğim var senden şu gaybana dünyada Varını, yoğunu al, hepsini al da\",\r\n          \"duration\": 209,\r\n          \"listenerCount\": 26213310\r\n        }\r\n      ],\r\n      \"songCount\": 2\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7166/api/Artists",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7166",
+					"path": [
+						"api",
+						"Artists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
